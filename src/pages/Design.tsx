@@ -11,7 +11,7 @@ const designItems: DesignItem[] = [
     title: 'Minimalist Brand Logo',
     category: ['logo'],
     imageSrc: 'https://via.placeholder.com/800x600/f5f5f5/333333?text=Logo+Design+1',
-    description: 'A clean, minimalist logo design that embodies the brand's core values of simplicity and elegance.'
+    description: 'A clean, minimalist logo design that embodies the brand\'s core values of simplicity and elegance.'
   },
   {
     id: 'logo-2',
