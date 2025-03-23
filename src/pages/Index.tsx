@@ -6,28 +6,28 @@ import Hero from '../components/Hero';
 import DesignSection, { DesignItem, DesignCategory } from '../components/DesignSection';
 import { ArrowRight } from 'lucide-react';
 
-// Placeholder design items
+// Featured design items for homepage
 const featuredDesigns: DesignItem[] = [
   {
     id: '1',
-    title: 'Brand Identity - Coffee Shop',
+    title: 'Gadget Hub Logo',
     category: ['logo' as DesignCategory],
-    imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Logo+Design',
-    description: 'Minimalist logo design for a modern coffee shop brand, focusing on clean lines and recognizable shape.'
+    imageSrc: '/lovable-uploads/d7c2eb82-a213-49a2-8b9c-35e53763691e.png',
+    description: 'Modern and vibrant logo design for a tech gadget shop, featuring an iconic "G" symbol with a distinctive "Hub" typography in green.'
   },
   {
     id: '2',
-    title: 'Social Media Campaign',
-    category: ['facebook' as DesignCategory, 'content' as DesignCategory],
-    imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Social+Media',
-    description: 'Series of Facebook posts designed for a product launch campaign with consistent visual language.'
+    title: 'Pure Aura Naturals',
+    category: ['logo' as DesignCategory],
+    imageSrc: '/lovable-uploads/c465acbe-4a44-42fa-ba3b-4d61bb907bb3.png',
+    description: 'Elegant pink logo for a natural beauty brand featuring a female profile with leaf elements, conveying purity and natural ingredients.'
   },
   {
     id: '3',
-    title: 'Website Banner',
-    category: ['banner' as DesignCategory],
-    imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Web+Banner',
-    description: 'Clean, high-impact website banner that drives attention to the key message with strategic use of color.'
+    title: 'Dark Light Gaming',
+    category: ['logo' as DesignCategory],
+    imageSrc: '/lovable-uploads/b3354c4d-8a02-45cb-b3e3-c4c5e68f30c7.png',
+    description: 'Gaming logo with a masked character on a green circular background, perfect for an esports team or gaming content creator.'
   }
 ];
 

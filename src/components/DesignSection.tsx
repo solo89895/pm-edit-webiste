@@ -71,14 +71,14 @@ const DesignSection: React.FC<DesignSectionProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3 }}
-            className="card-hover rounded-lg overflow-hidden bg-white shadow-md cursor-pointer"
+            className="card-hover rounded-lg overflow-hidden bg-white shadow-md cursor-pointer hover:shadow-lg transition-all duration-300"
             onClick={() => openModal(item)}
           >
-            <div className="aspect-[4/3] overflow-hidden">
+            <div className="aspect-[4/3] overflow-hidden bg-gray-50 flex items-center justify-center">
               <img 
                 src={item.imageSrc} 
                 alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                className="w-full h-full object-contain transition-transform duration-500 hover:scale-105 p-2"
                 loading="lazy"
               />
             </div>
@@ -98,16 +98,22 @@ const DesignSection: React.FC<DesignSectionProps> = ({
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           onClick={closeModal}
         >
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             className="bg-white max-w-4xl w-full rounded-lg overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
-              <img 
-                src={selectedItem.imageSrc} 
-                alt={selectedItem.title}
-                className="w-full max-h-[70vh] object-contain bg-white"
-              />
+              <div className="bg-gray-50 flex items-center justify-center">
+                <img 
+                  src={selectedItem.imageSrc} 
+                  alt={selectedItem.title}
+                  className="w-full max-h-[70vh] object-contain p-4"
+                />
+              </div>
               <button 
                 className="absolute top-4 right-4 rounded-full bg-black/70 text-white p-2 hover:bg-brand-green transition-colors duration-300"
                 onClick={closeModal}
@@ -126,7 +132,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({
               </p>
               <p className="text-muted-foreground">{selectedItem.description}</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>
