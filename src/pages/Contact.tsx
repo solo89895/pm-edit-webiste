@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { Mail, Phone, MessageSquare, Facebook, MapPin, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,6 @@ const Contact: React.FC = () => {
     email: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,14 +19,25 @@ const Contact: React.FC = () => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Message sent successfully! I'll get back to you soon.");
-      setFormData({ name: '', email: '', message: '' });
-      setIsSubmitting(false);
-    }, 1500);
+    // Validate form
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    
+    // Construct WhatsApp message
+    const messageText = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
+    const whatsappUrl = `https://wa.me/0725510768?text=${messageText}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Show success message
+    toast.success("Opening WhatsApp with your message!");
+    
+    // Clear form
+    setFormData({ name: '', email: '', message: '' });
   };
   
   // Contact information
@@ -65,14 +76,19 @@ const Contact: React.FC = () => {
   
   return (
     <Layout>
-      <section className="py-16 bg-secondary">
+      <section className="py-16 bg-gradient-to-r from-secondary to-gray-100">
         <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
+          <motion.div 
+            className="max-w-3xl mx-auto text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <h1 className="text-4xl md:text-6xl mb-6">Get In Touch</h1>
             <p className="text-lg text-muted-foreground">
               Have a project in mind? Want to collaborate? Feel free to reach out.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
       
@@ -80,13 +96,25 @@ const Contact: React.FC = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <div className="animate-fade-up">
+            <motion.div 
+              className="animate-fade-up"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
               
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="mt-1 bg-secondary w-12 h-12 rounded-full flex items-center justify-center">
+                  <motion.div 
+                    key={index} 
+                    className="flex items-start gap-4"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <div className="mt-1 bg-secondary w-12 h-12 rounded-full flex items-center justify-center shadow-md">
                       {info.icon}
                     </div>
                     <div>
@@ -104,23 +132,36 @@ const Contact: React.FC = () => {
                         <p className="text-muted-foreground">{info.value}</p>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
               
-              <div className="mt-12">
+              <motion.div 
+                className="mt-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
                 <h3 className="text-xl font-bold mb-4">Business Hours</h3>
                 <p className="text-muted-foreground">
                   Monday - Friday: 9:00 AM - 6:00 PM<br />
                   Saturday: 10:00 AM - 2:00 PM<br />
                   Sunday: Closed
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             
             {/* Contact Form */}
-            <div className="animate-slide-in-right">
-              <div className="bg-white rounded-lg shadow-lg p-8">
+            <motion.div 
+              className="animate-slide-in-right"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <motion.div 
+                className="bg-white rounded-lg shadow-xl p-8 hover:shadow-2xl transition-all duration-500"
+                whileHover={{ y: -5 }}
+              >
                 <h2 className="text-2xl font-bold mb-6">Send Me a Message</h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -172,22 +213,21 @@ const Contact: React.FC = () => {
                     />
                   </div>
                   
-                  <button
+                  <motion.button
                     type="submit"
-                    disabled={isSubmitting}
                     className="w-full bg-black text-white py-3 rounded-md hover:bg-brand-green transition-colors flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                   >
-                    {isSubmitting ? (
-                      'Sending...'
-                    ) : (
-                      <>
-                        Send Message <Send size={18} />
-                      </>
-                    )}
-                  </button>
+                    Send via WhatsApp <Send size={18} />
+                  </motion.button>
+                  
+                  <p className="text-xs text-center text-muted-foreground mt-2">
+                    This will open WhatsApp with your message pre-filled
+                  </p>
                 </form>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>

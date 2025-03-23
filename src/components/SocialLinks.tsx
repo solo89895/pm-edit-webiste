@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Facebook, Mail, Instagram, Twitter, MessageSquare } from 'lucide-react';
+import { Facebook, Mail, Instagram, Send, MessageSquare } from 'lucide-react';
 
 interface SocialLinksProps {
   size?: 'small' | 'medium' | 'large';
@@ -33,9 +33,9 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ size = 'medium' }) => {
       icon: <Instagram size={iconSize[size]} />
     },
     {
-      name: 'Twitter',
-      url: '#',
-      icon: <Twitter size={iconSize[size]} />
+      name: 'Telegram',
+      url: 'https://t.me/0725510768',
+      icon: <Send size={iconSize[size]} />
     },
     {
       name: 'WhatsApp',
@@ -57,7 +57,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ size = 'medium' }) => {
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`social-icon ${sizeClasses[size]}`}
+          className={`social-icon ${sizeClasses[size]} hover:scale-110 transition-all duration-300`}
           aria-label={social.name}
         >
           {social.icon}

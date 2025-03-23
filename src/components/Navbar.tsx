@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,18 @@ const Navbar: React.FC = () => {
     { title: 'CONTACT', path: '/contact' },
     { title: 'ABOUT ME', path: '/about' },
   ];
+
+  // Logo animation variants
+  const logoVariants = {
+    hover: {
+      scale: 1.05,
+      transition: {
+        duration: 0.3,
+        yoyo: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
   
   return (
     <header 
@@ -42,9 +55,21 @@ const Navbar: React.FC = () => {
       <div className="container-custom">
         <nav className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="font-heading text-3xl font-black relative" onClick={closeMenu}>
-            PM EDIT
-            <span className="absolute bottom-0 left-0 w-full h-1 bg-black"></span>
+          <Link to="/" className="font-heading relative" onClick={closeMenu}>
+            <motion.div 
+              whileHover="hover"
+              variants={logoVariants}
+              className="relative"
+            >
+              <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-black to-brand-green">PM</span>
+              <span className="text-3xl font-bold ml-1">EDIT</span>
+              <motion.div 
+                className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-brand-green to-black"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 0.5 }}
+              />
+            </motion.div>
           </Link>
           
           {/* Desktop Menu */}
