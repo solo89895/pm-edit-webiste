@@ -18,32 +18,24 @@ interface DesignSectionProps {
   items: DesignItem[];
   showTitle?: boolean;
   limit?: number;
+  filter?: DesignCategory;
 }
 
 const DesignSection: React.FC<DesignSectionProps> = ({ 
   items, 
   showTitle = true,
-  limit
+  limit,
+  filter
 }) => {
-  const [activeCategory, setActiveCategory] = useState<DesignCategory>('all');
   const [selectedItem, setSelectedItem] = useState<DesignItem | null>(null);
   
-  // Filter designs based on active category
-  const filteredItems = activeCategory === 'all' 
-    ? items 
-    : items.filter(item => item.category.includes(activeCategory));
+  // Filter designs based on active category if filter prop is provided
+  const displayedItems = filter && filter !== 'all' 
+    ? items.filter(item => item.category.includes(filter))
+    : items;
     
   // Limit items if needed
-  const displayedItems = limit ? filteredItems.slice(0, limit) : filteredItems;
-  
-  // Categories for filter
-  const categories: { label: string; value: DesignCategory }[] = [
-    { label: 'All', value: 'all' },
-    { label: 'Logo', value: 'logo' },
-    { label: 'Facebook Posts', value: 'facebook' },
-    { label: 'Banners', value: 'banner' },
-    { label: 'Content', value: 'content' }
-  ];
+  const finalItems = limit ? displayedItems.slice(0, limit) : displayedItems;
   
   // Open modal to view design details
   const openModal = (item: DesignItem) => {
@@ -58,7 +50,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({
   };
   
   return (
-    <div className="py-12">
+    <div className="py-6">
       {showTitle && (
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl mb-4">My Works</h2>
@@ -69,26 +61,9 @@ const DesignSection: React.FC<DesignSectionProps> = ({
         </div>
       )}
       
-      {/* Category Filter */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
-        {categories.map((category) => (
-          <button
-            key={category.value}
-            onClick={() => setActiveCategory(category.value)}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeCategory === category.value 
-                ? 'bg-brand-green text-white' 
-                : 'bg-secondary text-foreground hover:bg-secondary/80'
-            }`}
-          >
-            {category.label}
-          </button>
-        ))}
-      </div>
-      
       {/* Design Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {displayedItems.map((item) => (
+        {finalItems.map((item) => (
           <motion.div
             key={item.id}
             layout
@@ -96,7 +71,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3 }}
-            className="card-hover rounded-lg overflow-hidden bg-white shadow-md"
+            className="card-hover rounded-lg overflow-hidden bg-white shadow-md cursor-pointer"
             onClick={() => openModal(item)}
           >
             <div className="aspect-[4/3] overflow-hidden">
@@ -124,23 +99,32 @@ const DesignSection: React.FC<DesignSectionProps> = ({
           onClick={closeModal}
         >
           <div 
-            className="bg-white max-w-3xl w-full rounded-lg overflow-hidden"
+            className="bg-white max-w-4xl w-full rounded-lg overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <img 
-              src={selectedItem.imageSrc} 
-              alt={selectedItem.title}
-              className="w-full max-h-[70vh] object-contain bg-white"
-            />
+            <div className="relative">
+              <img 
+                src={selectedItem.imageSrc} 
+                alt={selectedItem.title}
+                className="w-full max-h-[70vh] object-contain bg-white"
+              />
+              <button 
+                className="absolute top-4 right-4 rounded-full bg-black/70 text-white p-2 hover:bg-brand-green transition-colors duration-300"
+                onClick={closeModal}
+                aria-label="Close"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold">{selectedItem.title}</h3>
-              <p className="text-muted-foreground mt-2">{selectedItem.description}</p>
-              <button 
-                className="mt-4 px-5 py-2 rounded bg-black text-white hover:bg-brand-green transition-colors"
-                onClick={closeModal}
-              >
-                Close
-              </button>
+              <p className="text-sm text-muted-foreground mt-1 mb-3">
+                {selectedItem.category.map(cat => cat.charAt(0).toUpperCase() + cat.slice(1)).join(', ')}
+              </p>
+              <p className="text-muted-foreground">{selectedItem.description}</p>
             </div>
           </div>
         </div>
