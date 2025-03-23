@@ -3,29 +3,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Hero from '../components/Hero';
-import DesignSection from '../components/DesignSection';
+import DesignSection, { DesignItem, DesignCategory } from '../components/DesignSection';
 import { ArrowRight } from 'lucide-react';
 
 // Placeholder design items
-const featuredDesigns = [
+const featuredDesigns: DesignItem[] = [
   {
     id: '1',
     title: 'Brand Identity - Coffee Shop',
-    category: ['logo'],
+    category: ['logo' as DesignCategory],
     imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Logo+Design',
     description: 'Minimalist logo design for a modern coffee shop brand, focusing on clean lines and recognizable shape.'
   },
   {
     id: '2',
     title: 'Social Media Campaign',
-    category: ['facebook', 'content'],
+    category: ['facebook' as DesignCategory, 'content' as DesignCategory],
     imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Social+Media',
     description: 'Series of Facebook posts designed for a product launch campaign with consistent visual language.'
   },
   {
     id: '3',
     title: 'Website Banner',
-    category: ['banner'],
+    category: ['banner' as DesignCategory],
     imageSrc: 'https://via.placeholder.com/600x450/f5f5f5/333333?text=Web+Banner',
     description: 'Clean, high-impact website banner that drives attention to the key message with strategic use of color.'
   }
