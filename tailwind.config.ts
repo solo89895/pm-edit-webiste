@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -67,7 +66,9 @@ export default {
 					green: '#39E535',
 					dark: '#1A1A1A',
 					light: '#F9F9F9'
-				}
+				},
+				'brand-green': '#10B981',
+				'secondary': '#F3F4F6',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -120,7 +121,19 @@ export default {
 						transform: 'translateX(0)',
 						opacity: '1'
 					}
-				}
+				},
+				fadeUp: {
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				slideInRight: {
+					'0%': { opacity: '0', transform: 'translateX(20px)' },
+					'100%': { opacity: '1', transform: 'translateX(0)' },
+				},
+				moveInCircle: {
+					'0%': { transform: 'rotate(0deg) translateX(50px) rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg) translateX(50px) rotate(-360deg)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -128,7 +141,10 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'fade-up': 'fade-up 0.6s ease-out',
 				'slide-in-right': 'slide-in-right 0.6s ease-out',
-				'slide-in-left': 'slide-in-left 0.6s ease-out'
+				'slide-in-left': 'slide-in-left 0.6s ease-out',
+				'spin-slow': 'spin 15s linear infinite',
+				'fade-up': 'fadeUp 0.5s ease-out',
+				'slide-in-right': 'slideInRight 0.5s ease-out',
 			}
 		}
 	},

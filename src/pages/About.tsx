@@ -1,11 +1,27 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { ArrowRight, Download, CheckCircle } from 'lucide-react';
+import { ArrowRight, Download, CheckCircle, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SocialLinks from '../components/SocialLinks';
 
 const About: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEmailClick = async () => {
+    try {
+      setIsLoading(true);
+      // Open Gmail in a new tab
+      window.open('https://mail.google.com/mail/?view=cm&fs=1&to=your.email@gmail.com&su=Design%20Inquiry&body=Hello%20Pathum%2C%0A%0AI%20am%20reaching%20out%20regarding%20', '_blank');
+      // Keep loading state for 1 second
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error) {
+      console.error('Failed to open email client:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Skills list - updated to remove UI/UX Design and Figma
   const skills = [
     "Logo Design",
@@ -48,13 +64,35 @@ const About: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="relative">
-                <div className="aspect-square overflow-hidden rounded-2xl border-8 border-brand-green max-w-md mx-auto shadow-xl">
+              <div className="relative group mx-auto max-w-[320px] md:max-w-[380px]">
+                {/* Main circular image */}
+                <div className="relative z-20 rounded-full overflow-hidden border-4 border-[#39E535]/40 aspect-square shadow-[0_0_30px_rgba(57,229,53,0.15)]">
                   <img 
-                    src="/lovable-uploads/ab39fe14-9682-4dd7-9695-6348a487954e.png" 
-                    alt="Portrait"
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    src="/lovable-uploads/about-portrait.jpg.png" 
+                    alt="Pathum Sanjaya Portrait"
+                    className="w-full h-full object-cover"
                   />
+                </div>
+                
+                {/* Animated border effect */}
+                <div className="absolute inset-0 -z-10">
+                  {/* Rotating gradient border */}
+                  <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-[#39E535] via-emerald-400 to-[#39E535] animate-[spin_3s_linear_infinite]" />
+                  <div className="absolute inset-[-3px] rounded-full bg-white" />
+                </div>
+
+                {/* Animated background elements */}
+                <div className="absolute inset-[-60px] -z-20">
+                  {/* Background circles */}
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#39E535]/20 animate-[spin_20s_linear_infinite_reverse]" />
+                  <div className="absolute inset-[15px] rounded-full border-2 border-dashed border-[#39E535]/15 animate-[spin_15s_linear_infinite]" />
+                  <div className="absolute inset-[30px] rounded-full border-2 border-dashed border-[#39E535]/10 animate-[spin_25s_linear_infinite_reverse]" />
+                  
+                  {/* Corner decorations */}
+                  <div className="absolute top-[10%] left-[10%] w-3 h-3 rounded-full bg-gradient-to-r from-[#39E535] to-emerald-400 blur-[2px] animate-pulse" />
+                  <div className="absolute top-[10%] right-[10%] w-2 h-2 rounded-full bg-gradient-to-r from-[#39E535] to-emerald-400 blur-[1px] animate-pulse delay-300" />
+                  <div className="absolute bottom-[10%] left-[10%] w-2 h-2 rounded-full bg-gradient-to-r from-[#39E535] to-emerald-400 blur-[1px] animate-pulse delay-500" />
+                  <div className="absolute bottom-[10%] right-[10%] w-3 h-3 rounded-full bg-gradient-to-r from-[#39E535] to-emerald-400 blur-[2px] animate-pulse delay-700" />
                 </div>
               </div>
             </motion.div>
@@ -81,23 +119,17 @@ const About: React.FC = () => {
                 that are both beautiful and functional.
               </p>
               
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col gap-4">
                 <Link 
-                  to="/contact" 
-                  className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-brand-green transition-colors duration-300 hover:scale-105 transform"
+                  to="/design" 
+                  className="inline-flex items-center gap-2 bg-black text-white px-8 py-3 rounded-full hover:bg-brand-green transition-colors duration-300 hover:scale-105 transform w-fit"
                 >
-                  Get In Touch <ArrowRight size={18} />
+                  View My Work <ArrowRight size={20} />
                 </Link>
                 
-                <a 
-                  href="https://drive.google.com/file/d/1T9Lt_gn0djc4LfF_1BMQ1sEJTdAT_2Pj/view?usp=sharing"
-                  download="Pathum_Sanjaya_CV.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 border-2 border-black px-6 py-3 rounded-full hover:bg-secondary transition-colors duration-300 hover:scale-105 transform"
-                >
-                  Download CV <Download size={18} />
-                </a>
+                <div className="flex items-center gap-4 mt-2">
+                  <SocialLinks size="medium" />
+                </div>
               </div>
             </motion.div>
           </div>
@@ -223,6 +255,36 @@ const About: React.FC = () => {
               </p>
             </motion.div>
           </div>
+        </div>
+      </section>
+      
+      {/* Email Box Section */}
+      <section className="py-16">
+        <div className="container-custom">
+          <motion.div 
+            className="max-w-md mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <button
+              onClick={handleEmailClick}
+              disabled={isLoading}
+              className="w-full bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group"
+            >
+              {isLoading ? (
+                <div className="w-6 h-6 border-2 border-brand-green border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Mail className="w-6 h-6 text-brand-green group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="text-lg font-medium text-gray-800 group-hover:text-brand-green transition-colors duration-300">
+                    Send me an email
+                  </span>
+                </>
+              )}
+            </button>
+          </motion.div>
         </div>
       </section>
       

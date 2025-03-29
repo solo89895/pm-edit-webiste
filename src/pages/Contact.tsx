@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { Mail, Phone, MessageSquare, Facebook, MapPin, Send } from 'lucide-react';
@@ -28,7 +27,7 @@ const Contact: React.FC = () => {
     
     // Construct WhatsApp message
     const messageText = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
-    const whatsappUrl = `https://wa.me/0725510768?text=${messageText}`;
+    const whatsappUrl = `https://wa.me/94725510768?text=${messageText}`;
     
     // Open WhatsApp
     window.open(whatsappUrl, '_blank');
